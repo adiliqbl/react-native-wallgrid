@@ -1,6 +1,7 @@
 import {Actions} from "../actions";
+import {ImageAction} from "../actions/images";
 
-export default (state = [], action: any) => {
+export default (state = [], action: ImageAction) => {
     switch (action.type) {
         case Actions.ADD_FAVOURITE:
             return [...state, action.image];

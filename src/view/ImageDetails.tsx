@@ -2,19 +2,30 @@ import React, {Component} from 'react';
 import Pexels from "../data/Pexels";
 import ViewError from "../data/views/ViewError";
 import Image from "../data/models/Image";
+import {connect} from "react-redux";
+import actions from "../store/actions";
 
-export interface Props {
+type Props = {
     id: string
 }
 
-export interface State {
+type State = {
     loading: boolean,
     image?: Image,
     error?: ViewError
 }
 
-export default class ImageDetails extends Component<Props, State> {
-    constructor(props: any) {
+
+/** Redux */
+const mapDispatchToProps = (dispatch: Function) => {
+    return {
+        addToFavourites: (image: Image) => dispatch(actions.addFavouriteImage(image)),
+        removeFromFavourites: (id: string) => dispatch(actions.removeFavouriteImage(id))
+    }
+};
+
+class ImageDetails extends Component<Props, State> {
+    constructor(props: Props) {
         super(props);
         this.state = {
             loading: false,
@@ -43,3 +54,5 @@ export default class ImageDetails extends Component<Props, State> {
         return null;
     }
 }
+
+export default connect(null, mapDispatchToProps)(ImageDetails);
