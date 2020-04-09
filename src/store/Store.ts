@@ -1,7 +1,7 @@
 import Image from "../data/models/Image";
 
 type Store = {
-    images: Image[]
+    favouriteImages: Image[]
 }
 
 export default Store;

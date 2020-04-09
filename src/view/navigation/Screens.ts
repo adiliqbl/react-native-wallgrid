@@ -1,4 +1,6 @@
-export default {
-    Home: 'Home',
-    ImageDetails: 'ImageDetails'
+enum Screens {
+    Home = 'Home',
+    ImageDetails = 'ImageDetails'
 }
+
+export default Screens

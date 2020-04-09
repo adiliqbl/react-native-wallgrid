@@ -4,11 +4,12 @@ import Pexels from "../data/Pexels";
 import ViewError from "../data/views/ViewError";
 import Image from "../data/models/Image";
 import Store from "../store/Store";
-import {SafeAreaView, ScrollView, StatusBar, Text, View} from "react-native";
-import styles from "../styles";
-import {Header} from "react-native/Libraries/NewAppScreen";
+import {FlatList, SafeAreaView, StatusBar, Text} from "react-native";
+import {NavigationProp} from "../data/views/ViewProps";
+import Screens from "./navigation/Screens";
+import ImageListItem from "../components/ImageListItem";
 
-type Props = {}
+type Props = NavigationProp<Screens.Home> & ReduxProps
 
 type State = {
     loading: boolean
@@ -18,8 +19,12 @@ type State = {
 }
 
 /** Redux */
+interface ReduxProps {
+    totalFavourites: number
+}
+
 const mapStateToProps = (store: Store) => ({
-    totalFavourites: store.images.length
+    totalFavourites: store.favouriteImages.length
 });
 
 class Home extends Component<Props, State> {
@@ -48,30 +53,38 @@ class Home extends Component<Props, State> {
             .finally(() => this.setState({loading: false}))
     }
 
+    onImageClick = (id: string) => this.props.navigation.navigate(Screens.ImageDetails, {id: id});
+
+    renderContent = (content: any) => (
+        <>
+            <StatusBar barStyle="dark-content"/>
+            <SafeAreaView>{content}</SafeAreaView>
+        </>
+    );
+
     render() {
-        if (this.state.loading) return null;
-        return (
-            <>
-                <StatusBar barStyle="dark-content"/>
-                <SafeAreaView>
-                    <ScrollView
-                        contentInsetAdjustmentBehavior="automatic"
-                        style={styles.scrollView}>
-                        <Header/>
-                        <View style={styles.engine}>
-                            <Text style={styles.footer}>Engine: Hermes</Text>
-                        </View>
-                        <View style={styles.body}>
-                            <View style={styles.sectionContainer}>
-                                <Text style={styles.sectionDescription}>
-                                    Test content
-                                </Text>
-                            </View>
-                        </View>
-                    </ScrollView>
-                </SafeAreaView>
-            </>
-        );
+        if (this.state.loading) {
+            return this.renderContent((<Text>Loading</Text>));
+        } else if (this.state.error != null) {
+            return this.renderContent((
+                <Text>{this.state.error}</Text>
+            ))
+        } else return this.renderContent((
+            <FlatList
+                data={this.state.images}
+                renderItem={({item}) => (
+                    <ImageListItem url={item.src.medium}
+                                   onPress={() => this.onImageClick(item.id)}/>
+                )}
+                ListHeaderComponent={() => (
+                    <Text>Favourite Images: {this.props.totalFavourites}</Text>
+                )}
+                showsHorizontalScrollIndicator={false}
+                showsVerticalScrollIndicator={false}
+                initialNumToRender={30}
+                keyExtractor={item => item.id.toString()}
+                legacyImplementation={false}/>
+        ))
     }
 }
 

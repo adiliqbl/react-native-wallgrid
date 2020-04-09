@@ -1,13 +1,14 @@
 interface ImageSource {
-    original: string,
-    small: string,
-    tiny: string
+    original: string
+    medium: string
+    small: string
 }
 
 export default interface Image {
-    width: number,
-    height: number,
-    url: string,
-    photographer: string,
+    id: string
+    width: number
+    height: number
+    url: string
+    photographer: string
     src: ImageSource
 }

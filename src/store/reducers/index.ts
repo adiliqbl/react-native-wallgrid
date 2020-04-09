@@ -1,7 +1,7 @@
 import {combineReducers} from 'redux';
 
-import images from './images';
+import favouriteImages from './favouriteImages';
 
 export default combineReducers({
-    images
+    favouriteImages
 });

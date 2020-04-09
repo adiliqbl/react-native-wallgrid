@@ -1,7 +1,7 @@
 import {StyleSheet} from "react-native";
 import {Colors} from "react-native/Libraries/NewAppScreen";
 
-export default StyleSheet.create({
+export const Styles = StyleSheet.create({
     scrollView: {
         backgroundColor: Colors.lighter,
     },
@@ -38,4 +38,10 @@ export default StyleSheet.create({
         paddingRight: 12,
         textAlign: 'right',
     },
+
+    fullscreenImage: {
+        width: '100%',
+        height: '90%',
+        resizeMode: 'contain'
+    }
 });

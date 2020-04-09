@@ -1,9 +1,7 @@
 import * as images from "./images";
+import * as ActionsInner from "./actions";
 
-export const Actions = {
-    ADD_FAVOURITE: 'ADD_FAVOURITE',
-    REMOVE_FAVOURITE: 'REMOVE_FAVOURITE'
-};
+export const Actions = ActionsInner.default;
 
 export default {
     ...images

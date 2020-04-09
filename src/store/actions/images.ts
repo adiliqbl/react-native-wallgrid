@@ -1,4 +1,4 @@
-import {Actions} from "./index";
+import Actions from "./actions";
 import Image from "../../data/models/Image";
 
 export const addFavouriteImage = (image: Image) => ({
